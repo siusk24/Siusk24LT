@@ -1,0 +1,13 @@
+{
+    "name": "parcelstars/api-lib",
+    "description": "wrapper around parcelstars api",
+    "type": "library",
+    "license": "#",
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "ParcelStars\\": "src/"
+      }
+    }
+}
