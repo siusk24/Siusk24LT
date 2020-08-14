@@ -22,6 +22,41 @@ class Parcel
         $this->heigth = $heigth;
     }
 
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function setUnitWeight($unit_weight)
+    {
+        $this->unit_weight = $unit_weight;
+
+        return $this;
+    }
+
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    public function setLength($length)
+    {
+        $this->length = $length;
+
+        return $this;
+    }
+
+    public function setHeight($heigth)
+    {
+        $this->heigth = $heigth;
+
+        return $this;
+    }
+
     private function generateParcel()
     {
         $parcel = array(

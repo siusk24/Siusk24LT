@@ -23,7 +23,12 @@ class API
         }
     }
 
+    public function setToken($token)
+    {
+        $this->token = $token;
 
+        return $this;
+    }
 
 
 
@@ -65,16 +70,17 @@ class API
         $errors = json_decode($response, true);
 
         if (isset($errors['messages'])) {
-            echo 'messages:<br><br>';
-            echo $response;
-            echo '<br><br>';
-            throw new ValidationException(implode(", \n", $errors['messages'][0]));
+            //echo 'messages:<br><br>';
+            //echo $response;
+            //echo '<br><br>';
+            throw new ValidationException(debug_backtrace()[2]['function'] . ':<br><br>' . implode(", \n", $errors['messages'][0]));
         }
 
         if (isset($errors['error'])) {
-            echo 'errors:<br><br>';
+            //echo 'errors:<br><br>';
             //echo $response;
-            throw new ValidationException($errors['error']);
+            echo debug_backtrace()[2]['function'];
+            throw new ValidationException(debug_backtrace()[2]['function'] . ':<br><br>' . $errors['error']);
         }
 
         throw new ParcelStarsException('API responded with error: ' . $response);

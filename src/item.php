@@ -18,6 +18,27 @@ class Item
         $this->item_amount = $item_amount;
     }
 
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function setItemPrice($item_price)
+    {
+        $this->item_price = $item_price;
+
+        return $this;
+    }
+
+    public function setItemAmount($item_amount)
+    {
+        $this->item_amount = $item_amount;
+
+        return $this;
+    }
+
     private function generateItem()
     {
         $item = array(

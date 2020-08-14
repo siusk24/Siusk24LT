@@ -2,6 +2,8 @@
 
 namespace ParcelStars;
 
+use ParcelStars\Exception\ParcelStarsException;
+
 /**
  *
  */
@@ -32,6 +34,88 @@ class Receiver
         $this->city = $city;
         $this->phone_number = $phone_number;
         $this->country_id = $country_id;
+    }
+
+    public function setShippingType($shipping_type, $company_name = '', $street_name = '', $city = '')
+    {
+        $this->shipping_type = $shipping_type;
+
+        if ($shipping_type === 'courier') {
+            $this->zipcode = $this->parcel_terminal_zipcode;
+            $this->parcel_terminal_zipcode = '';
+
+            if (!$company_name || !$street_name || !$city) {
+                throw new ParcelStarsException("Receiver: company name, street name, city is required to perform this action");
+            }
+
+            $this->company_name = $company_name;
+            $this->street_name = $street_name;
+            $this->city = $city;
+        }
+        if ($shipping_type === 'terminal') {
+            $this->parcel_terminal_zipcode = $this->$zipcode;
+            $this->zipcode = '';
+
+            $this->company_name = '';
+            $this->street_name = '';
+            $this->city = '';
+        }
+
+        return $this;
+    }
+
+    public function setCompanyName($company_name)
+    {
+        $this->company_name = $company_name;
+
+        return $this;
+    }
+
+    public function setContactName($contact_name)
+    {
+        $this->contact_name = $contact_name;
+
+        return $this;
+    }
+
+    public function setStreetName($street_name)
+    {
+        $this->street_name = $street_name;
+
+        return $this;
+    }
+
+    public function setZipcode($zipcode)
+    {
+        if ($shipping_type === 'courier') {
+            $this->zipcode = $zipcode;
+        }
+        if ($shipping_type === 'terminal') {
+            $this->parcel_terminal_zipcode = $zipcode;
+        }
+
+        return $this;
+    }
+
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function setPhoneNumber($phone_number)
+    {
+        $this->phone_number = $phone_number;
+
+        return $this;
+    }
+
+    public function setCountryId($country_id)
+    {
+        $this->country_id = $country_id;
+
+        return $this;
     }
 
     private function generateReceiver()
