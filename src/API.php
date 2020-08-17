@@ -19,7 +19,7 @@ class API
         $this->token = $token;
 
         if (!$test_mode) {
-            $this->url =  "https://www.parcelstars.com/api/";
+            $this->url = "https://www.parcelstars.com/api/";
         }
     }
 
@@ -31,15 +31,14 @@ class API
     }
 
 
-
     private function callAPI($url, $data = [])
     {
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-      "Authorization: Bearer ".$this->token
-    ));
+            "Authorization: Bearer " . $this->token
+        ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         if ($data) {
@@ -87,10 +86,6 @@ class API
     }
 
 
-
-
-
-
     public function listAllCountries()
     {
         $response = $this->callAPI($this->url . 'services/countries');
@@ -121,14 +116,14 @@ class API
 
     public function getLabel($shipment_id)
     {
-        $response = $this->callAPI($this->url . "orders/".$shipment_id."/label");
+        $response = $this->callAPI($this->url . "orders/" . $shipment_id . "/label");
 
         return $response;
     }
 
     public function generateManifest($shipment_ids)
     {
-        $post_data = array( 'shipments' => $shipment_ids );
+        $post_data = array('shipments' => $shipment_ids);
         $response = $this->callAPI($this->url . 'manifests', $post_data);
 
         return $response;
@@ -159,21 +154,21 @@ class API
 
     public function cancelOrder()
     {
-        $response = $this->callAPI($this->url . 'orders/'.$shipment_id.'/cancel');
+        $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/cancel');
 
         return $response;
     }
 
     public function makePickup($shipment_id)
     {
-        $response = $this->callAPI($this->url . 'orders/'.$shipment_id.'/pickup');
+        $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/pickup');
 
         return $response;
     }
 
     public function trackOrder($shipment_id)
     {
-        $response = $this->callAPI($this->url . 'orders/'.$shipment_id.'/track');
+        $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/track');
 
         return $response;
     }

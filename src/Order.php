@@ -2,6 +2,7 @@
 
 namespace ParcelStars;
 
+use ParcelStars\Exception\ParcelStarsException;
 use ParcelStars\Sender;
 use ParcelStars\Receiver;
 use ParcelStars\Item;
@@ -9,37 +10,27 @@ use ParcelStars\Parcel;
 
 class Order
 {
-    private $department_shortname;
-    private $service_code;
-    private $sender;
-    private $receiver;
-    private $parcel_type;
+    private string $department_shortname;
+    private string $service_code;
+    private Sender $sender;
+    private Receiver $receiver;
+    private string $parcel_type;
     private $parcels = array();
     private $items = array();
-    private $reference;
-    private $cod_amount;
-    private $callback_urls;
+    private string $reference;
+    private int $cod_amount;
+    private array $callback_urls;
 
 
-    public function __construct($department_shortname, $service_code, Sender $sender, Receiver $receiver, $parcel_type, $parcels, $reference, $cod_amount, $items, $callback_urls = array())
+    public function __construct()
     {
-        $this->addParcels($parcels);
-        $this->addItems($items);
 
-        $this->setDepartmentShortname($department_shortname);
-        $this->setServiceCode($service_code);
-        $this->setSender($sender);
-        $this->setReceiver($receiver);
-        $this->setParcelType($parcel_type);
-        $this->setReference($reference);
-        $this->setCodAmount($cod_amount);
-        $this->setCallbackUrls($callback_urls);
     }
 
     public function addParcels($parcels)
     {
         if (is_object($parcels)) {
-            array_push($this->parcels, $parcels->returnObject());
+            array_push($this->parcels, $parcels->generateParcel());
             return $this;
         } else {
             array_merge($this->parcels, $parcels);
@@ -51,7 +42,7 @@ class Order
     public function addItems($items)
     {
         if (is_object($items)) {
-            array_push($this->items, $items->returnObject());
+            array_push($this->items, $items->generateItem());
         } else {
             array_merge($this->items, $items);
         }
@@ -129,27 +120,30 @@ class Order
         return $this;
     }
 
-    private function generateOrder()
+    public function generateOrder()
     {
-        $order = array(
-          'department_shortname' => $this->department_shortname,
-          'service_code' => $this->service_code,
-          'sender' => $this->sender->returnObject(),
-          'receiver' => $this->receiver->returnObject(),
-          'parcel_type' => $this->parcel_type,
-          'parcels' => $this->parcels,
-          'reference' => $this->reference,
-          'cod_amount' => $this->cod_amount,
-          'items' => $this->items,
-          'callback_urls' => $this->callback_urls
-      );
+        if (!$this->department_shortname) throw new ParcelStarsException('All the fields must be filled. department_shortname is missing.');
+        if (!$this->service_code) throw new ParcelStarsException('All the fields must be filled. service_code is missing.');
+        if (!$this->sender) throw new ParcelStarsException('All the fields must be filled. sender is missing.');
+        if (!$this->receiver) throw new ParcelStarsException('All the fields must be filled. receiver is missing.');
+        if (!$this->parcel_type) throw new ParcelStarsException('All the fields must be filled. parcel_type is missing.');
+        if (!$this->parcels) throw new ParcelStarsException('All the fields must be filled. parcels are missing.');
+        if (!$this->items) throw new ParcelStarsException('All the fields must be filled. items are missing.');
+        if (!$this->reference) throw new ParcelStarsException('All the fields must be filled. reference is missing.');
+        if (!$this->cod_amount && $this->cod_amount != 0) throw new ParcelStarsException('All the fields must be filled. cod_amount is missing.');
 
-        return $order;
-    }
-
-    public function returnObject()
-    {
-        return $this->generateOrder();
+        return array(
+            'department_shortname' => $this->department_shortname,
+            'service_code' => $this->service_code,
+            'sender' => $this->sender->generateSender(),
+            'receiver' => $this->receiver->generateReceiver(),
+            'parcel_type' => $this->parcel_type,
+            'parcels' => $this->parcels,
+            'reference' => $this->reference,
+            'cod_amount' => $this->cod_amount,
+            'items' => $this->items,
+            'callback_urls' => $this->callback_urls
+        );
     }
 
     public function returnJson()

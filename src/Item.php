@@ -2,6 +2,8 @@
 
 namespace ParcelStars;
 
+use ParcelStars\Exception\ParcelStarsException;
+
 /**
  *
  */
@@ -11,11 +13,9 @@ class Item
     private $item_price;
     private $item_amount;
 
-    public function __construct($description, $item_price, $item_amount)
+    public function __construct()
     {
-        $this->description = $description;
-        $this->item_price = $item_price;
-        $this->item_amount = $item_amount;
+
     }
 
     public function setDescription($description)
@@ -39,15 +39,16 @@ class Item
         return $this;
     }
 
-    private function generateItem()
+    public function generateItem()
     {
-        $item = array(
-          'description' => $this->description,
-          'item_price' => $this->item_price,
-          'item_amount' => $this->item_amount
+        if (!$this->description) throw new ParcelStarsException('All the fields must be filled. description is missing.');
+        if (!$this->item_price) throw new ParcelStarsException('All the fields must be filled. item_price is missing.');
+        if (!$this->item_amount) throw new ParcelStarsException('All the fields must be filled. item_amount is missing.');
+        return array(
+            'description' => $this->description,
+            'item_price' => $this->item_price,
+            'item_amount' => $this->item_amount
         );
-
-        return $item;
     }
 
     public function returnObject()

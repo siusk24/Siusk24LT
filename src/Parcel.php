@@ -2,6 +2,8 @@
 
 namespace ParcelStars;
 
+use ParcelStars\Exception\ParcelStarsException;
+
 /**
  *
  */
@@ -13,13 +15,9 @@ class Parcel
     private $length;
     private $height;
 
-    public function __construct($amount, $unit_weight, $width, $length, $heigth)
+    public function __construct()
     {
-        $this->amount = $amount;
-        $this->unit_weight = $unit_weight;
-        $this->width = $width;
-        $this->length = $length;
-        $this->heigth = $heigth;
+
     }
 
     public function setAmount($amount)
@@ -57,23 +55,24 @@ class Parcel
         return $this;
     }
 
-    private function generateParcel()
+    public function generateParcel()
     {
+        if (!$this->amount) throw new ParcelStarsException('All the fields must be filled. amount is missing.');
+        if (!$this->unit_weight) throw new ParcelStarsException('All the fields must be filled. unit_weight is missing.');
+        if (!$this->width) throw new ParcelStarsException('All the fields must be filled. width is missing.');
+        if (!$this->length) throw new ParcelStarsException('All the fields must be filled. length is missing.');
+        if (!$this->heigth) throw new ParcelStarsException('All the fields must be filled. heigth is missing.');
         $parcel = array(
-        'amount' => $this->amount,
-        'unit_weight' => $this->unit_weight,
-        'width' => $this->width,
-        'length' => $this->length,
-        'heigth' => $this->heigth
-      );
+            'amount' => $this->amount,
+            'unit_weight' => $this->unit_weight,
+            'width' => $this->width,
+            'length' => $this->length,
+            'heigth' => $this->heigth
+        );
 
         return $parcel;
     }
 
-    public function returnObject()
-    {
-        return $this->generateParcel();
-    }
 
     public function returnJson()
     {

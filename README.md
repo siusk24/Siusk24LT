@@ -35,13 +35,7 @@ Minimum required setup:
 ```php
 use ParcelStars\Sender;
 
-$sender = new Sender('TEST',          // company name
-                     'TEST',          // contact name
-                     'TEST',          // street name
-                     '48311',         // zip code
-                     'TEST',          // city
-                     '+37061234567',  // phone number
-                     122);            // country id
+$sender = new Sender();
 
 $sender
   ->setCompanyName('company_name')
@@ -65,20 +59,9 @@ Minimum required setup:
 use ParcelStars\Receiver;
 
 try {
-  $receiver1 = new Receiver('courier',          // shipping type
-                            'TEST',             // contact name
-                            '+37061234567',     // phone number
-                            116,                // country id
-                            '12-345',           // zip code
-                            'TEST',             // company name
-                            'TEST',             // street name
-                            'TEST');            // city
+  $receiver1 = new Receiver();
 
-  $receiver2 = new Receiver('terminal',         // shipping type
-                            'TEST',             // contact name
-                            '+37061234567',     // phone number
-                            116,                // country id
-                            '12-345');          // zip code
+  $receiver2 = new Receiver();
 
   $receiver1
     ->setShippingType('terminal')
@@ -91,7 +74,7 @@ try {
     ->setCountryId('country_id');
 
   $receiver2
-    ->setShippingType('courier', 'company_name', 'street_name', 'city')
+    ->setShippingType('courier')
     ->setCompanyName('company_name')
     ->setContactName('contact_name')
     ->setStreetName('street_name')
@@ -114,11 +97,7 @@ Minimum required setup:
 ```php
 use ParcelStars\Parcel;
 
-$parcel = new Parcel( 2,       // amount
-                      1,       // unit weight
-                      20,      // width   
-                      20,      // length
-                      20);     // heigth
+$parcel = new Parcel();=
 $parcel
     ->setAmount(2)
     ->setUnitWeight(1)
@@ -137,9 +116,7 @@ Minimum required setup:
 use ParcelStars\API;
 use ParcelStars\Sender;
 
-$item = new Item( 'test package',  // description
-                  5,               // item price
-                  1);              // item amount
+$item = new Item();
 $item
   ->setDescription('description')
   ->setItemPrice(5)
@@ -158,59 +135,52 @@ use ParcelStars\Item;
 use ParcelStars\Parcel;
 use ParcelStars\Order;
 
-$sender = new Sender(     'TEST',           // company name
-                          'TEST',           // contact name
-                          'TEST',           // street name
-                          '48311',          // zip code
-                          'TEST',           // city
-                          '+37061234567',   // phone number
-                          122);             // country id
+$sender = new Sender();
+$sender
+    ->setCompanyName('TEST')
+    ->setContactName('TEST')
+    ->setStreetName('TEST')
+    ->setZipcode('48311')
+    ->setCity("TEST")
+    ->setPhoneNumber('37061234567')
+    ->setCountryId('122');
 
-$receiver = new Receiver('courier',         // shipping type
-                          'TEST',           // contact name
-                          '+37061234567',   // phone number
-                          116,              // country id
-                          '12-345',         // zip code
-                          'TEST',           // company name
-                          'TEST',           // street name
-                          'TEST');          // city
+$receiver = new Receiver('courier');
 
-$parcel1 = new Parcel(    2,                // amount
-                          1,                // unit weight
-                          20,               // width   
-                          20,               // length
-                          20);              // heigth
+$parcel1 = new Parcel();
+$parcel1
+        ->setAmount(2)
+        ->setUnitWeight(1)
+        ->setWidth(20)
+        ->setLength(20)
+        ->setHeight(20);
 
-$parcel2 = new Parcel(    2,                // amount
-                          1,                // unit weight
-                          20,               // width   
-                          20,               // length
-                          20);              // heigth
+$parcel2 = new Parcel(); 
+$parcel2
+        ->setAmount(3)
+        ->setUnitWeight(2)
+        ->setWidth(20)
+        ->setLength(20)
+        ->setHeight(20);
 
 $parcels = array($parcel1, $parcel2);
 
-$item1 = new Item(        'test package',   // description
-                          5,                // item price
-                          1);               // item amount
-
-$item2 = new Item(        'test package',   // description
-                          5,                // item price
-                          1);               // item amount
+$item1 = new Item();
+$item1
+    ->setDescription('test package')
+    ->setItemPrice(5)
+    ->setItemAmount(1);
+$item2 = new Item();
+$item2
+    ->setDescription('test package')
+    ->setItemPrice(1)
+    ->setItemAmount(3);
 
 $items = array($item1, $item2);
 
 $callback_urls = array("www.1.com/cb", "www.2.com/cb");
 
-$order = new Order(       'ZIPAS',          // department short name
-                          'PS1',            // service code
-                          $sender,          // sender
-                          $receiver,        // receiver
-                          'parcel',         // parcel type
-                          $parcels,         // parcels
-                          'test package',   // reference
-                          0,                // cod amount
-                          $items,           // items
-                          $callback_urls);  // callback url array - optional
+$order = new Order();
 
 $order
   ->setDepartmentShortname($department_shortname)
