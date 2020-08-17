@@ -70,12 +70,12 @@ class Parcel
         return $parcel;
     }
 
-    public function return_object()
+    public function returnObject()
     {
         return $this->generateParcel();
     }
 
-    public function return_json()
+    public function returnJson()
     {
         return json_encode($this->generateParcel());
     }

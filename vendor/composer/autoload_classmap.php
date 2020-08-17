@@ -6,12 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ParcelStars\\API' => $baseDir . '/src/API.php',
-    'ParcelStars\\Exception\\ParcelStarsException' => $baseDir . '/src/Exception/ParcelStarsException.php',
-    'ParcelStars\\Exception\\ValidationException' => $baseDir . '/src/Exception/ValidationException.php',
-    'ParcelStars\\Item' => $baseDir . '/src/item.php',
-    'ParcelStars\\Order' => $baseDir . '/src/Order.php',
-    'ParcelStars\\Parcel' => $baseDir . '/src/parcel.php',
-    'ParcelStars\\Receiver' => $baseDir . '/src/receiver.php',
-    'ParcelStars\\Sender' => $baseDir . '/src/sender.php',
 );

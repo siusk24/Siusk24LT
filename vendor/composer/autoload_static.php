@@ -20,23 +20,11 @@ class ComposerStaticInit5ecf90da18d5dc0114aeebf424c5f0de
         ),
     );
 
-    public static $classMap = array (
-        'ParcelStars\\API' => __DIR__ . '/../..' . '/src/API.php',
-        'ParcelStars\\Exception\\ParcelStarsException' => __DIR__ . '/../..' . '/src/Exception/ParcelStarsException.php',
-        'ParcelStars\\Exception\\ValidationException' => __DIR__ . '/../..' . '/src/Exception/ValidationException.php',
-        'ParcelStars\\Item' => __DIR__ . '/../..' . '/src/item.php',
-        'ParcelStars\\Order' => __DIR__ . '/../..' . '/src/Order.php',
-        'ParcelStars\\Parcel' => __DIR__ . '/../..' . '/src/parcel.php',
-        'ParcelStars\\Receiver' => __DIR__ . '/../..' . '/src/receiver.php',
-        'ParcelStars\\Sender' => __DIR__ . '/../..' . '/src/sender.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit5ecf90da18d5dc0114aeebf424c5f0de::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit5ecf90da18d5dc0114aeebf424c5f0de::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit5ecf90da18d5dc0114aeebf424c5f0de::$classMap;
 
         }, null, ClassLoader::class);
     }

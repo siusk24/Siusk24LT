@@ -2,9 +2,11 @@
 
 namespace ParcelStars;
 
-/**
- *
- */
+use ParcelStars\Sender;
+use ParcelStars\Receiver;
+use ParcelStars\Item;
+use ParcelStars\Parcel;
+
 class Order
 {
     private $department_shortname;
@@ -12,36 +14,32 @@ class Order
     private $sender;
     private $receiver;
     private $parcel_type;
-    private $parcels;
+    private $parcels = array();
+    private $items = array();
     private $reference;
     private $cod_amount;
     private $callback_urls;
 
 
-    public function __construct($department_shortname, $service_code, $sender, $receiver, $parcel_type, $parcels, $reference, $cod_amount, $items, $callback_urls = array())
+    public function __construct($department_shortname, $service_code, Sender $sender, Receiver $receiver, $parcel_type, $parcels, $reference, $cod_amount, $items, $callback_urls = array())
     {
-        if (is_object($parcels)) {
-            $parcels = array($parcels->return_object());
-        }
-        if (is_object($items)) {
-            $items = array($items->return_object());
-        }
-        $this->department_shortname = $department_shortname;
-        $this->service_code = $service_code;
-        $this->sender = $sender;
-        $this->receiver = $receiver;
-        $this->parcel_type = $parcel_type;
-        $this->parcels = $parcels;
-        $this->reference = $reference;
-        $this->cod_amount = $cod_amount;
-        $this->items = $items;
-        $this->callback_urls = $callback_urls;
+        $this->addParcels($parcels);
+        $this->addItems($items);
+
+        $this->setDepartmentShortname($department_shortname);
+        $this->setServiceCode($service_code);
+        $this->setSender($sender);
+        $this->setReceiver($receiver);
+        $this->setParcelType($parcel_type);
+        $this->setReference($reference);
+        $this->setCodAmount($cod_amount);
+        $this->setCallbackUrls($callback_urls);
     }
 
     public function addParcels($parcels)
     {
         if (is_object($parcels)) {
-            array_push($this->parcels, $parcels->return_object());
+            array_push($this->parcels, $parcels->returnObject());
             return $this;
         } else {
             array_merge($this->parcels, $parcels);
@@ -53,7 +51,7 @@ class Order
     public function addItems($items)
     {
         if (is_object($items)) {
-            array_push($this->items, $items->return_object());
+            array_push($this->items, $items->returnObject());
         } else {
             array_merge($this->items, $items);
         }
@@ -75,14 +73,14 @@ class Order
         return $this;
     }
 
-    public function setSender($sender)
+    public function setSender(Sender $sender)
     {
         $this->sender = $sender;
 
         return $this;
     }
 
-    public function setReceiver($receiver)
+    public function setReceiver(Receiver $receiver)
     {
         $this->receiver = $receiver;
 
@@ -136,8 +134,8 @@ class Order
         $order = array(
           'department_shortname' => $this->department_shortname,
           'service_code' => $this->service_code,
-          'sender' => $this->sender->return_object(),
-          'receiver' => $this->receiver->return_object(),
+          'sender' => $this->sender->returnObject(),
+          'receiver' => $this->receiver->returnObject(),
           'parcel_type' => $this->parcel_type,
           'parcels' => $this->parcels,
           'reference' => $this->reference,
@@ -149,12 +147,12 @@ class Order
         return $order;
     }
 
-    public function return_object()
+    public function returnObject()
     {
         return $this->generateOrder();
     }
 
-    public function return_json()
+    public function returnJson()
     {
         return json_encode($this->generateOrder());
     }

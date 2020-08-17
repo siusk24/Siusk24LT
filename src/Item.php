@@ -50,12 +50,12 @@ class Item
         return $item;
     }
 
-    public function return_object()
+    public function returnObject()
     {
         return $this->generateItem();
     }
 
-    public function return_json()
+    public function returnJson()
     {
         return json_encode($this->generateItem());
     }
