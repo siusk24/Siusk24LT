@@ -21,14 +21,14 @@ Any function starting with `add` or `set` returns its class so functions can be 
 
 ## Authentication
 ---
-Uses supplied user `$token` and `(bool) $test_mode`, which if set to true will let you use Demo API or if set to false or not provided will use production API. It is called during API object creation.
-- Initialize new API library using: `$ps = new API($token, true);`
+Uses supplied user `$token`. It is called during API object creation.
+- Initialize new API library using: `$ps = new API($token);`
 - Set new token using: `$ps->setToken($token);`
 
 
 ## Creating and Editing Sender
 ---
-`use Siusk24LT\Sender;` will allow to create Sender object.
+`use Siusk24LT\Sender;` will allow creating Sender object.
 
 Minimum required setup:
 
@@ -183,7 +183,6 @@ $callback_urls = array("www.1.com/cb", "www.2.com/cb");
 $order = new Order();
 
 $order
-  ->setDepartmentShortname($department_shortname)
   ->setServiceCode($service_code)
   ->setSender($sender)
   ->setReceiver($receiver)
@@ -192,7 +191,7 @@ $order
   ->setReference($reference)
   ->setCodAmount($cod_amount)
   ->setItems($items)
-  ->setCallbackUrls($callback_urls)
+  ->setCallbackUrls($callback_urls);
 ```
 
 When creating Order it is possible to register a single item or parcel, by passing it without array.

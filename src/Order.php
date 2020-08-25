@@ -10,16 +10,15 @@ use Siusk24LT\Parcel;
 
 class Order
 {
-    private string $department_shortname;
-    private string $service_code;
-    private Sender $sender;
-    private Receiver $receiver;
-    private string $parcel_type;
+    private $service_code;
+    private $sender;
+    private $receiver;
+    private $parcel_type;
     private $parcels = array();
     private $items = array();
-    private string $reference;
-    private int $cod_amount;
-    private array $callback_urls;
+    private $reference;
+    private $cod_amount;
+    private $callback_urls;
 
 
     public function __construct()
@@ -46,13 +45,6 @@ class Order
         } else {
             array_merge($this->items, $items);
         }
-
-        return $this;
-    }
-
-    public function setDepartmentShortname($department_shortname)
-    {
-        $this->department_shortname = $department_shortname;
 
         return $this;
     }
@@ -122,7 +114,6 @@ class Order
 
     public function generateOrder()
     {
-        if (!$this->department_shortname) throw new Siusk24LTException('All the fields must be filled. department_shortname is missing.');
         if (!$this->service_code) throw new Siusk24LTException('All the fields must be filled. service_code is missing.');
         if (!$this->sender) throw new Siusk24LTException('All the fields must be filled. sender is missing.');
         if (!$this->receiver) throw new Siusk24LTException('All the fields must be filled. receiver is missing.');
@@ -133,7 +124,6 @@ class Order
         if (!$this->cod_amount && $this->cod_amount != 0) throw new Siusk24LTException('All the fields must be filled. cod_amount is missing.');
 
         return array(
-            'department_shortname' => $this->department_shortname,
             'service_code' => $this->service_code,
             'sender' => $this->sender->generateSender(),
             'receiver' => $this->receiver->generateReceiver(),

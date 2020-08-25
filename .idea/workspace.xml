@@ -20,22 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ecbc985-4c21-4332-b026-5a4805a075aa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ParcelStars.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ParcelStars.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/examples/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/API.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/API.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Exception/ParcelStarsException.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exception/Siusk24LTException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Exception/ValidationException.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exception/ValidationException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Item.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Item.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parcel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parcel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Person.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Person.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Receiver.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Receiver.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Sender.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sender.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +61,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.php.quality.tools" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -81,7 +73,17 @@
       <option name="presentableId" value="Default" />
       <updated>1597666120912</updated>
       <workItem from="1597666122602" duration="6331000" />
-      <workItem from="1597673469253" duration="893000" />
+      <workItem from="1597673469253" duration="2101000" />
+      <workItem from="1597921091356" duration="2522000" />
+      <workItem from="1597930586851" duration="11898000" />
+      <workItem from="1597996689757" duration="29000" />
+      <workItem from="1597996814276" duration="423000" />
+      <workItem from="1598006824899" duration="1478000" />
+      <workItem from="1598249274625" duration="173000" />
+      <workItem from="1598334461055" duration="2473000" />
+      <workItem from="1598337232406" duration="3818000" />
+      <workItem from="1598353556846" duration="1477000" />
+      <workItem from="1598359297250" duration="2775000" />
     </task>
     <servers />
   </component>
@@ -98,6 +100,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="988" y="172" width="824" height="691" key="#CLI_Interpreters" timestamp="1597666595368">
@@ -116,10 +119,11 @@
       <screen x="72" y="27" width="1848" height="1053" />
     </state>
     <state x="779" y="355" width="415" height="412" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1597673859500" />
-    <state x="729" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1597669144210">
-      <screen x="72" y="27" width="1848" height="1053" />
+    <state x="2603" y="291" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598360401886">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="729" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/72.27.1848.1053@72.27.1848.1053" timestamp="1597669144210" />
+    <state x="2603" y="291" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/72.478.1848.1020/1920.0.1920.1080@1920.0.1920.1080" timestamp="1598360401886" />
     <state x="774" y="303" width="424" height="520" key="FileChooserDialogImpl" timestamp="1597666893414">
       <screen x="72" y="27" width="1848" height="1053" />
     </state>

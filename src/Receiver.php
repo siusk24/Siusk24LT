@@ -8,33 +8,14 @@ use Siusk24LT\Exception\Siusk24LTException;
 
 class Receiver extends Person
 {
-    private $shipping_type;
 
-    const SHIPPING_TERMINAL = 'terminal';
-    const SHIPPING_COURIER = 'courier';
-
-    public $valid_shipping_types;
 
     public function __construct($shipping_type)
     {
-
-        $this->valid_shipping_types = array(
-            self::SHIPPING_COURIER,
-            self::SHIPPING_TERMINAL
-        );
-        $this->setShippingType($shipping_type);
+        parent::__construct($shipping_type);
     }
 
-    public function setShippingType($shipping_type)
-    {
-        if (!in_array($shipping_type, $this->valid_shipping_types)) {
-            throw new Siusk24LTException('Unknown shipping type:<br>' . $shipping_type . '. You need to use one of the following types:<br>' . implode(" \n", $valid_shipping_types));
-        }
-        $this->shipping_type = $shipping_type;
 
-
-        return $this;
-    }
 
 
     public function generateReceiver()
@@ -56,7 +37,7 @@ class Receiver extends Person
             'contact_name' => $this->contact_name,
             'street_name' => $this->street_name,
             'city' => $this->city,
-            'phone_number' => $this->phone_number,
+            'phone' => $this->phone_number,
             'country_id' => $this->country_id
         );
 
@@ -66,6 +47,19 @@ class Receiver extends Person
             $receiver += [ 'parcel_terminal_zipcode' => $this->zipcode ];
 
         return $receiver;
+    }
+
+
+    public function generateReceiverOffers()
+    {
+        if (!$this->zipcode) throw new Siusk24LTException('All the fields must be filled. zipcode is missing.');
+        if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
+
+
+        return array(
+            'zipcode' => $this->zipcode,
+            'country_id' => $this->country_id
+        );
     }
 
 
