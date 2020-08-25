@@ -10,16 +10,16 @@ use Siusk24LT\Parcel;
 
 class Order
 {
-    private string $department_shortname;
-    private string $service_code;
-    private Sender $sender;
-    private Receiver $receiver;
-    private string $parcel_type;
+    private $department_shortname;
+    private $service_code;
+    private $sender;
+    private $receiver;
+    private $parcel_type;
     private $parcels = array();
     private $items = array();
-    private string $reference;
-    private int $cod_amount;
-    private array $callback_urls;
+    private $reference;
+    private $cod_amount;
+    private $callback_urls;
 
 
     public function __construct()

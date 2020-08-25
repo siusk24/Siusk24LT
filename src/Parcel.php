@@ -64,10 +64,10 @@ class Parcel
         if (!$this->heigth) throw new Siusk24LTException('All the fields must be filled. heigth is missing.');
         $parcel = array(
             'amount' => $this->amount,
-            'unit_weight' => $this->unit_weight,
-            'width' => $this->width,
-            'length' => $this->length,
-            'heigth' => $this->heigth
+            'weight' => $this->unit_weight,
+            'x' => $this->width,
+            'y' => $this->length,
+            'z' => $this->heigth
         );
 
         return $parcel;

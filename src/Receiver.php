@@ -56,7 +56,7 @@ class Receiver extends Person
             'contact_name' => $this->contact_name,
             'street_name' => $this->street_name,
             'city' => $this->city,
-            'phone_number' => $this->phone_number,
+            'phone' => $this->phone_number,
             'country_id' => $this->country_id
         );
 
@@ -66,6 +66,19 @@ class Receiver extends Person
             $receiver += [ 'parcel_terminal_zipcode' => $this->zipcode ];
 
         return $receiver;
+    }
+
+
+    public function generateReceiverOffers()
+    {
+        if (!$this->zipcode) throw new Siusk24LTException('All the fields must be filled. zipcode is missing.');
+        if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
+
+
+        return array(
+            'zipcode' => $this->zipcode,
+            'country_id' => $this->country_id
+        );
     }
 
 

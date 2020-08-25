@@ -17,19 +17,19 @@ use Siusk24LT\Parcel;
 use Siusk24LT\Order;
 use Siusk24LT\Exception\Siusk24LTException;
 
-$token = "KW7z763Gd5ok8ArSHQ5Lqwtt";
+$token = "oB9NQuVag7K4KqL7TrbJjwtt";
 
 try {
-    $ps = new API($token, true);
+    $ps = new API($token, false, true);
 
     $sender1 = new Sender();
     $sender1
-    ->setCompanyName('TEST')
+    ->setCompanyName('TESTAS')
         ->setContactName('TEST')
         ->setStreetName('TEST')
         ->setZipcode('48311')
         ->setCity("TEST")
-        ->setPhoneNumber('37061234567')
+        ->setPhoneNumber('+37061234567')
         ->setCountryId('122');
     $sender2 = new Sender();
     $sender2
@@ -59,10 +59,10 @@ try {
         ->setCompanyName('TEST')
         ->setContactName('TEST')
         ->setStreetName('TEST')
-        ->setZipcode('12-345')
+        ->setZipcode('12345')
         ->setCity('TEST')
         ->setPhoneNumber('+37061234567')
-        ->setCountryId('116');
+        ->setCountryId('122');
 
     $receiver2
         ->setShippingType('terminal')
@@ -133,7 +133,7 @@ try {
         ->setCallbackUrls($callback_urls);
     $order3 = new Order();
     $order3
-        ->setDepartmentShortname('ZIPAS')
+        ->setDepartmentShortname('DPD1')
         ->setServiceCode('PS5 LT')
         ->setSender($sender1)
         ->setReceiver($receiver1)
@@ -147,24 +147,31 @@ try {
 
     //$allCountries                       = $ps->listAllCountries();
     //$departments                        = $ps->getDepartments();
+    //$offers                              = $ps->getOffers($sender1, $receiver1, $parcels1);
+    //$allOrders                          = $ps->getAllOrders();
     //$label                              = $ps->getLabel('W2S081037758');
     //$terminals                          = $ps->getTerminals('LT');
     //$allServices                        = $ps->listAllServices();
-    //$manifest                           = $ps->generateManifest(array('W2S081137782', 'W2S081137783'));
+    //$manifest                           = $ps->generateManifest('S24C2011462');
+    //$manifestLatest                     = $ps->generateManifestLatest();
     //$makePickupResult                   = $ps->makePickup('W2S0627258');
     //$orderTrackingInfo                  = $ps->trackOrder('W2S030418190');
-    $generateOrderResult = $ps->generateOrder($order3);
+
+
+    //$generateOrderResult = $ps->generateOrder($order3);
     //$generateOrder_parcelTerminalResult = $ps->generateOrder_parcelTerminal($order2);
 
     //echo json_encode($allCountries);
     //echo json_encode($departments);
+    //echo json_encode($offers);
     //echo json_encode($label);
     //echo json_encode($terminals);
     //echo json_encode($allServices);
     //echo json_encode($manifest);
+    //echo json_encode($manifestLatest);
     //echo json_encode($makePickupResult);
     //echo json_encode($orderTrackingInfo);
-    echo json_encode($generateOrderResult);
+    //echo json_encode($generateOrderResult);
     //echo json_encode($generateOrder_parcelTerminalResult);
 } catch (Siusk24LTException $e) {
     echo $e->getMessage();
