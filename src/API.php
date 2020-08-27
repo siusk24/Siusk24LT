@@ -7,9 +7,9 @@ use Siusk24LT\Exception\ValidationException;
 
 class API
 {
-    protected string $url = "https://demo.siusk24.lt/api/v1/";
-    protected string $token;
-    private bool $debug_mode;
+    protected $url = "https://demo.siusk24.lt/api/v1/";
+    protected $token;
+    private $debug_mode;
 
     public function __construct($token = false, $test_mode = false, $api_debug_mode = false)
     {
@@ -79,14 +79,19 @@ class API
             echo '<b>Default API lib response:</b><br><br>';
         }
 
-        $this->handleApiResponse($response, $httpCode);
-
         echo $this->debug_mode ? '<br><br>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br><br>' : '';
+
+        return $this->handleApiResponse($response, $httpCode);
     }
 
     private function handleApiResponse($response, $httpCode)
     {
+        $respObj = json_decode($response, true);
         if ($httpCode == 200) {
+          if (isset($respObj['messages'])) {
+              echo 'messages from ' . debug_backtrace()[2]['function'] . '():<br><br>';
+              $this->throwErrors($respObj['messages']);
+          }
             return json_decode($response)->result;
         }
 
@@ -94,7 +99,7 @@ class API
             throw new Siusk24LTException(implode(" \n", json_decode($response)->errors));
         }
 
-        $respObj = json_decode($response, true);
+
         /*
                 if (isset($errors['messages'])) {
                     echo 'messages:<br><br>';
@@ -107,6 +112,9 @@ class API
             echo 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>';
             $this->throwErrors($respObj['errors']);
         }
+
+
+
 
         $r = $response ? json_encode($response) : 'Connection timed out';
         throw new Siusk24LTException('API responded with error:<br><br>' . 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>' . $r);

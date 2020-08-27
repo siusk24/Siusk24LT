@@ -17,7 +17,7 @@ use Siusk24LT\Parcel;
 use Siusk24LT\Order;
 use Siusk24LT\Exception\Siusk24LTException;
 
-$token = "oB9NQuVag7K4KqL7TrbJjwtt";
+$token = "cXZiXJwBXWI2JU0eeJODKQtt";
 
 try {
     $ps = new API($token, false, true);
@@ -147,7 +147,7 @@ try {
     //$departments                        = $ps->getDepartments();
     //$offers                              = $ps->getOffers($sender1, $receiver1, $parcels1);
     //$allOrders                          = $ps->getAllOrders();
-    //$label                              = $ps->getLabel('W2S081037758');
+    $label                              = $ps->getLabel('S240824196134');
     //$terminals                          = $ps->getTerminals('LT');
     //$allServices                        = $ps->listAllServices();
     //$manifest                           = $ps->generateManifest('S24C2011462');
@@ -156,7 +156,7 @@ try {
     //$orderTrackingInfo                  = $ps->trackOrder('W2S030418190');
 
 
-    $generateOrderResult = $ps->generateOrder($order3);
+    //$generateOrderResult = $ps->generateOrder($order3);
     //$generateOrder_parcelTerminalResult = $ps->generateOrder_parcelTerminal($order2);
 
     //echo json_encode($allCountries);
