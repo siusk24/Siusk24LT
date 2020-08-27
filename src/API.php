@@ -88,7 +88,7 @@ class API
     {
         $respObj = json_decode($response, true);
         if ($httpCode == 200) {
-          if (isset($respObj['messages'])) {
+          if (isset($respObj['messages']) && $respObj['messages']) {
               echo 'messages from ' . debug_backtrace()[2]['function'] . '():<br><br>';
               $this->throwErrors($respObj['messages']);
           }
@@ -108,7 +108,7 @@ class API
                     throw new ValidationException(debug_backtrace()[2]['function'] . ':<br><br>' . implode(", \n", $errors['messages']));
                 }
         */
-        if (isset($respObj['errors'])) {
+        if (isset($respObj['errors']) && $respObj['errors']) {
             echo 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>';
             $this->throwErrors($respObj['errors']);
         }
