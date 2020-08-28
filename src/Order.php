@@ -13,7 +13,6 @@ class Order
     private $service_code;
     private $sender;
     private $receiver;
-    private $parcel_type;
     private $parcels = array();
     private $items = array();
     private $reference;
@@ -70,13 +69,6 @@ class Order
         return $this;
     }
 
-    public function setParcelType($parcel_type)
-    {
-        $this->parcel_type = $parcel_type;
-
-        return $this;
-    }
-
     public function setParcels($parcels)
     {
         $this->parcels = $parcels;
@@ -117,7 +109,6 @@ class Order
         if (!$this->service_code) throw new Siusk24LTException('All the fields must be filled. service_code is missing.');
         if (!$this->sender) throw new Siusk24LTException('All the fields must be filled. sender is missing.');
         if (!$this->receiver) throw new Siusk24LTException('All the fields must be filled. receiver is missing.');
-        if (!$this->parcel_type) throw new Siusk24LTException('All the fields must be filled. parcel_type is missing.');
         if (!$this->parcels) throw new Siusk24LTException('All the fields must be filled. parcels are missing.');
         if (!$this->items) throw new Siusk24LTException('All the fields must be filled. items are missing.');
         if (!$this->reference) throw new Siusk24LTException('All the fields must be filled. reference is missing.');
@@ -127,7 +118,6 @@ class Order
             'service_code' => $this->service_code,
             'sender' => $this->sender->generateSender(),
             'receiver' => $this->receiver->generateReceiver(),
-            'parcel_type' => $this->parcel_type,
             'parcels' => $this->parcels,
             'reference' => $this->reference,
             'cod_amount' => $this->cod_amount,

@@ -194,7 +194,6 @@ $order
   ->setServiceCode($service_code)
   ->setSender($sender)
   ->setReceiver($receiver)
-  ->setParcelType($parcel_type)
   ->setParcels($parcels)
   ->setReference($reference)
   ->setCodAmount($cod_amount)
