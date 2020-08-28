@@ -196,7 +196,6 @@ $order
   ->setReceiver($receiver)
   ->setParcels($parcels)
   ->setReference($reference)
-  ->setCodAmount($cod_amount)
   ->setItems($items)
   ->setCallbackUrls($callback_urls);
 ```

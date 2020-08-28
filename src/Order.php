@@ -16,7 +16,6 @@ class Order
     private $parcels = array();
     private $items = array();
     private $reference;
-    private $cod_amount;
     private $callback_urls;
 
 
@@ -83,13 +82,6 @@ class Order
         return $this;
     }
 
-    public function setCodAmount($cod_amount)
-    {
-        $this->cod_amount = $cod_amount;
-
-        return $this;
-    }
-
     public function setItems($items)
     {
         $this->items = $items;
@@ -112,7 +104,6 @@ class Order
         if (!$this->parcels) throw new Siusk24LTException('All the fields must be filled. parcels are missing.');
         if (!$this->items) throw new Siusk24LTException('All the fields must be filled. items are missing.');
         if (!$this->reference) throw new Siusk24LTException('All the fields must be filled. reference is missing.');
-        if (!$this->cod_amount && $this->cod_amount != 0) throw new Siusk24LTException('All the fields must be filled. cod_amount is missing.');
 
         return array(
             'service_code' => $this->service_code,
@@ -120,7 +111,6 @@ class Order
             'receiver' => $this->receiver->generateReceiver(),
             'parcels' => $this->parcels,
             'reference' => $this->reference,
-            'cod_amount' => $this->cod_amount,
             'export_items' => $this->items,
             'callback_urls' => $this->callback_urls
         );

@@ -115,7 +115,6 @@ try {
         ->setParcelType('parcel')
         ->setParcels($parcels1)
         ->setReference('test package')
-        ->setCodAmount(0)
         ->setItems($items1)
         ->setCallbackUrls($callback_urls);
 
@@ -127,7 +126,6 @@ try {
         ->setParcelType('parcel')
         ->setParcels($parcels1)
         ->setReference('test package')
-        ->setCodAmount(0)
         ->setItems($items1)
         ->setCallbackUrls($callback_urls);
     $order3 = new Order();
@@ -138,7 +136,6 @@ try {
         ->setParcelType('parcel')
         ->setParcels($parcels1)
         ->setReference('test package')
-        ->setCodAmount(0)
         ->setItems($items1)
         ->setCallbackUrls($callback_urls);
     $order3->addItems($item2)->addItems($items1)->addParcels($parcel1)->addParcels($parcels1);
