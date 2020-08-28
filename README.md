@@ -146,6 +146,14 @@ $sender
     ->setCountryId('122');
 
 $receiver = new Receiver('courier');
+$receiver
+    ->setCompanyName('TEST')
+    ->setContactName('TEST')
+    ->setStreetName('TEST')
+    ->setZipcode('12345')
+    ->setCity('TEST')
+    ->setPhoneNumber('+37061234567')
+    ->setCountryId('122');
 
 $parcel1 = new Parcel();
 $parcel1
@@ -155,7 +163,7 @@ $parcel1
         ->setLength(20)
         ->setHeight(20);
 
-$parcel2 = new Parcel(); 
+$parcel2 = new Parcel();
 $parcel2
         ->setAmount(3)
         ->setUnitWeight(2)

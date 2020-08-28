@@ -131,7 +131,7 @@ class Order
             'parcels' => $this->parcels,
             'reference' => $this->reference,
             'cod_amount' => $this->cod_amount,
-            'items' => $this->items,
+            'export_items' => $this->items,
             'callback_urls' => $this->callback_urls
         );
     }
