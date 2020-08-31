@@ -32,7 +32,6 @@ class Person
             self::SHIPPING_TERMINAL,
             false
         );
-        // try-catch exception
         $this->setShippingType($shipping_type);
     }
 
