@@ -9,7 +9,6 @@ use Siusk24LT\Exception\Siusk24LTException;
  */
 class Parcel
 {
-    // netizipuoti
     private $amount;
     private $unit_weight;
     private $width;
