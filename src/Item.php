@@ -10,8 +10,8 @@ use Siusk24LT\Exception\Siusk24LTException;
 class Item
 {
     private $description;
-    private $item_price;
-    private $item_amount;
+    private $value;
+    private $units;
 
     public function __construct()
     {
@@ -25,16 +25,16 @@ class Item
         return $this;
     }
 
-    public function setItemPrice($item_price)
+    public function setItemPrice($value)
     {
-        $this->item_price = $item_price;
+        $this->value = $value;
 
         return $this;
     }
 
-    public function setItemAmount($item_amount)
+    public function setItemAmount($units)
     {
-        $this->item_amount = $item_amount;
+        $this->units = $units;
 
         return $this;
     }
@@ -42,12 +42,12 @@ class Item
     public function generateItem()
     {
         if (!$this->description) throw new Siusk24LTException('All the fields must be filled. description is missing.');
-        if (!$this->item_price) throw new Siusk24LTException('All the fields must be filled. item_price is missing.');
-        if (!$this->item_amount) throw new Siusk24LTException('All the fields must be filled. item_amount is missing.');
+        if (!$this->value) throw new Siusk24LTException('All the fields must be filled. value is missing.');
+        if (!$this->units) throw new Siusk24LTException('All the fields must be filled. units is missing.');
         return array(
             'description' => $this->description,
-            'item_price' => $this->item_price,
-            'item_amount' => $this->item_amount
+            'value' => $this->value,
+            'units' => $this->units
         );
     }
 

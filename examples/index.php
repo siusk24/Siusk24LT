@@ -112,7 +112,6 @@ try {
         ->setServiceCode('PS1')
         ->setSender($sender1)
         ->setReceiver($receiver1)
-        ->setParcelType('parcel')
         ->setParcels($parcels1)
         ->setReference('test package')
         ->setItems($items1)
@@ -123,7 +122,6 @@ try {
         ->setServiceCode('PS5 LT')
         ->setSender($sender1)
         ->setReceiver($receiver1)
-        ->setParcelType('parcel')
         ->setParcels($parcels1)
         ->setReference('test package')
         ->setItems($items1)
@@ -133,7 +131,6 @@ try {
         ->setServiceCode('PS5 LT')
         ->setSender($sender1)
         ->setReceiver($receiver1)
-        ->setParcelType('parcel')
         ->setParcels($parcels1)
         ->setReference('test package')
         ->setItems($items1)
@@ -144,7 +141,7 @@ try {
     //$departments                        = $ps->getDepartments();
     //$offers                              = $ps->getOffers($sender1, $receiver1, $parcels1);
     //$allOrders                          = $ps->getAllOrders();
-    $label                              = $ps->getLabel('S240824196134');
+    //$label                              = $ps->getLabel('S240824196134');
     //$terminals                          = $ps->getTerminals('LT');
     //$allServices                        = $ps->listAllServices();
     //$manifest                           = $ps->generateManifest('S24C2011462');
@@ -153,7 +150,7 @@ try {
     //$orderTrackingInfo                  = $ps->trackOrder('W2S030418190');
 
 
-    //$generateOrderResult = $ps->generateOrder($order3);
+    $generateOrderResult = $ps->generateOrder($order3);
     //$generateOrder_parcelTerminalResult = $ps->generateOrder_parcelTerminal($order2);
 
     //echo json_encode($allCountries);
