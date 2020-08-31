@@ -9,6 +9,7 @@ use Siusk24LT\Exception\Siusk24LTException;
  */
 class Parcel
 {
+    // netizipuoti
     private $amount;
     private $unit_weight;
     private $width;
@@ -50,7 +51,7 @@ class Parcel
 
     public function setHeight($heigth)
     {
-        // typo in word height
+        // typo in word height - yra kelios vietos sitame faile - reikia visas pakeisti.
         $this->heigth = $heigth;
 
         return $this;
