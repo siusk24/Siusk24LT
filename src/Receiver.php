@@ -9,14 +9,10 @@ use Siusk24LT\Exception\Siusk24LTException;
 class Receiver extends Person
 {
 
-
     public function __construct($shipping_type)
     {
         parent::__construct($shipping_type);
     }
-
-
-
 
     public function generateReceiver()
     {
@@ -64,13 +60,11 @@ class Receiver extends Person
 
     public function returnJson()
     {
-        // try-catch
         return json_encode($this->generateReceiver());
     }
 
     public function __toArray()
     {
-        // try-catch
         return $this->generateReceiver();
     }
 }

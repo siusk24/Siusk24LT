@@ -50,13 +50,11 @@ class Sender extends Person
 
     public function returnJson()
     {
-        // try-catch missing
         return $this->json_encode(generateSender());
     }
 
     public function __toArray()
     {
-        // try-catch missing
         return $this->generateSender();
     }
 }

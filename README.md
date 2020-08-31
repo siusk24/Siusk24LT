@@ -113,7 +113,8 @@ $parcel
 Minimum required setup:
 
 ```php
-use Siusk24LT\API;
+// apacioje du zemiau use istrinti ir naudoti use Siusk24LT\Item;
+use Siusk24LT\Item;
 use Siusk24LT\Sender;
 
 $item = new Item();
@@ -128,6 +129,7 @@ $item
 ---
 
 ```php
+// API use nera panaudotas - galima istrinti
 use Siusk24LT\API;
 use Siusk24LT\Sender;
 use Siusk24LT\Receiver;
