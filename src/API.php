@@ -81,6 +81,7 @@ class API
 
         echo $this->debug_mode ? '<br><br>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br><br>' : '';
 
+        // surround with try - catch
         return $this->handleApiResponse($response, $httpCode);
     }
 
@@ -128,6 +129,7 @@ class API
 
         $keys = array_keys($arr);
         for ($i = 0; $i < count($arr); $i++) {
+            // 133-136 iskelti i atskira funkcija
             if (is_array($arr[$keys[$i]]))
                 foreach ($arr[$keys[$i]] as $err)
                     array_push($errs, $keys[$i] . '->' . $err);
@@ -217,6 +219,7 @@ class API
     public function generateOrder_parcelTerminal($order)
     {
         $post_data = $order->__toArray();
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders', $post_data);
 
         return $response;
