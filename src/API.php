@@ -96,10 +96,11 @@ class API
         }
 
         if ($httpCode == 401) {
+            // galetu buti tikslesnis exception - Siusk24NotAuthorizedException
             throw new Siusk24LTException(implode(" \n", json_decode($response)->errors));
         }
 
-
+        // paliktas uzkomentuotas kodas - tai prasto stiliaus pavyzdys, geriau istrinti
         /*
                 if (isset($errors['messages'])) {
                     echo 'messages:<br><br>';
