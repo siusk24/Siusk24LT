@@ -9,7 +9,6 @@ use Siusk24LT\Exception\Siusk24LTException;
  */
 class Item
 {
-    // netipizuoti
     private $description;
     private $item_price;
     private $item_amount;

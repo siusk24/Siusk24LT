@@ -9,7 +9,6 @@ use Siusk24LT\Exception\Siusk24LTException;
  */
 class Person
 {
-    // netipizuoti, nuo php 7 versijos verta tipizuoti
     protected $company_name;
     protected $contact_name;
     protected $street_name;
