@@ -50,6 +50,7 @@ class Parcel
 
     public function setHeight($heigth)
     {
+        // typo in word height
         $this->heigth = $heigth;
 
         return $this;
