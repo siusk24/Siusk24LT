@@ -64,11 +64,13 @@ class Receiver extends Person
 
     public function returnJson()
     {
+        // try-catch
         return json_encode($this->generateReceiver());
     }
 
     public function __toArray()
     {
+        // try-catch
         return $this->generateReceiver();
     }
 }
