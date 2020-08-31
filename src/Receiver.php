@@ -21,7 +21,6 @@ class Receiver extends Person
     public function generateReceiver()
     {
         if (!$this->shipping_type) throw new Siusk24LTException('All the fields must be filled. shipping_type is missing.');
-        if (!$this->company_name && $this->shipping_type === self::SHIPPING_COURIER) throw new Siusk24LTException('All the fields must be filled. company_name is missing.');
         if (!$this->contact_name) throw new Siusk24LTException('All the fields must be filled. contact_name is missing.');
         if (!$this->street_name && $this->shipping_type === self::SHIPPING_COURIER) throw new Siusk24LTException('All the fields must be filled. street_name is missing.');
         if (!$this->zipcode) throw new Siusk24LTException('All the fields must be filled. zipcode is missing.');
