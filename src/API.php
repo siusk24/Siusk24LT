@@ -227,6 +227,7 @@ class API
 
     public function cancelOrder($shipment_id)
     {
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/cancel');
 
         return $response;
@@ -234,6 +235,7 @@ class API
 
     public function makePickup($shipment_id)
     {
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/pickup');
 
         return $response;
@@ -241,6 +243,7 @@ class API
 
     public function trackOrder($shipment_id)
     {
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/track');
 
         return $response;
