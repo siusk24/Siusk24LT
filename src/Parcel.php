@@ -50,6 +50,7 @@ class Parcel
 
     public function setHeight($heigth)
     {
+        // typo in word height - yra kelios vietos sitame faile - reikia visas pakeisti.
         $this->heigth = $heigth;
 
         return $this;

@@ -89,6 +89,7 @@ class API
         $respObj = json_decode($response, true);
         if ($httpCode == 200) {
           if (isset($respObj['messages']) && $respObj['messages']) {
+              // istrinti sita eilute, kad vartotojui neisvestu
               echo 'messages from ' . debug_backtrace()[2]['function'] . '():<br><br>';
               $this->throwErrors($respObj['messages']);
           }
@@ -96,10 +97,11 @@ class API
         }
 
         if ($httpCode == 401) {
+            // galetu buti tikslesnis exception - Siusk24NotAuthorizedException
             throw new Siusk24LTException(implode(" \n", json_decode($response)->errors));
         }
 
-
+        // paliktas uzkomentuotas kodas - tai prasto stiliaus pavyzdys, geriau istrinti
         /*
                 if (isset($errors['messages'])) {
                     echo 'messages:<br><br>';
@@ -112,7 +114,7 @@ class API
             echo 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>';
             $this->throwErrors($respObj['errors']);
         }
-
+        // per daug tuscios vietos
 
 
 
@@ -127,6 +129,7 @@ class API
 
         $keys = array_keys($arr);
         for ($i = 0; $i < count($arr); $i++) {
+            // 133-136 iskelti i atskira funkcija
             if (is_array($arr[$keys[$i]]))
                 foreach ($arr[$keys[$i]] as $err)
                     array_push($errs, $keys[$i] . '->' . $err);
@@ -216,6 +219,7 @@ class API
     public function generateOrder_parcelTerminal($order)
     {
         $post_data = $order->__toArray();
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders', $post_data);
 
         return $response;
@@ -223,6 +227,7 @@ class API
 
     public function cancelOrder($shipment_id)
     {
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/cancel');
 
         return $response;
@@ -230,6 +235,7 @@ class API
 
     public function makePickup($shipment_id)
     {
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/pickup');
 
         return $response;
@@ -237,6 +243,7 @@ class API
 
     public function trackOrder($shipment_id)
     {
+        // nebutinas lokalus kintamasis
         $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/track');
 
         return $response;

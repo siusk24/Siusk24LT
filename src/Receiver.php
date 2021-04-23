@@ -9,17 +9,14 @@ use Siusk24LT\Exception\Siusk24LTException;
 class Receiver extends Person
 {
 
-
     public function __construct($shipping_type)
     {
         parent::__construct($shipping_type);
     }
 
-
-
-
     public function generateReceiver()
     {
+        // iskelti i Person klase kaip atskira metoda, pvz: validatePerson
         if (!$this->shipping_type) throw new Siusk24LTException('All the fields must be filled. shipping_type is missing.');
         if (!$this->contact_name) throw new Siusk24LTException('All the fields must be filled. contact_name is missing.');
         if (!$this->street_name && $this->shipping_type === self::SHIPPING_COURIER) throw new Siusk24LTException('All the fields must be filled. street_name is missing.');
@@ -29,7 +26,7 @@ class Receiver extends Person
         if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
 
 
-
+        // vietoje $this->shipping_type naudoti GetShippingType is Person klases
         $receiver = array(
             'shipping_type' => $this->shipping_type,
             'company_name' => $this->company_name,

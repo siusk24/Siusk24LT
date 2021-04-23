@@ -22,6 +22,7 @@ class Person
     const SHIPPING_TERMINAL = 'terminal';
     const SHIPPING_COURIER = 'courier';
 
+    // galetu buti protected, nes naudojamas tik sitame faile
     public $valid_shipping_types;
 
     public function __construct($shipping_type)
