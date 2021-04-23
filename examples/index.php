@@ -17,10 +17,10 @@ use Siusk24LT\Parcel;
 use Siusk24LT\Order;
 use Siusk24LT\Exception\Siusk24LTException;
 
-$token = "cXZiXJwBXWI2JU0eeJODKQtt";
+$token = "qk5yeuhSOE4XTJ3Upiq92Qtt";
 
 try {
-    $ps = new API($token, false, true);
+    $ps = new API($token, true, true);
 
     $sender1 = new Sender();
     $sender1
@@ -63,6 +63,7 @@ try {
         ->setZipcode('12345')
         ->setCity('TEST')
         ->setPhoneNumber('+37061234567')
+        ->setEori('GB987654312011')
         ->setCountryId('122');
 
     $receiver2
@@ -70,6 +71,7 @@ try {
         ->setContactName('TEST')
         ->setZipcode('12-345')
         ->setPhoneNumber('+37061234567')
+        ->setEori('GB987654312011')
         ->setCountryId('116');
 
     $receiver3
@@ -80,6 +82,7 @@ try {
         ->setZipcode('12-345')
         ->setCity('Frankfurt')
         ->setPhoneNumber('+37065032153')
+        ->setEori('GB987654312011')
         ->setCountryId('241');
 
     $parcel1 = new Parcel();
@@ -95,12 +98,14 @@ try {
     $item1
         ->setDescription('test package')
         ->setItemPrice(5)
-        ->setItemAmount(1);
+        ->setItemAmount(1)
+        ->setCountryId('122');
     $item2 = new Item();
     $item2
         ->setDescription('test package')
         ->setItemPrice(1)
-        ->setItemAmount(3);
+        ->setItemAmount(3)
+        ->setCountryId('122');
     $items1 = array($item1->generateItem());
 
     $callback_urls = array(
@@ -109,7 +114,7 @@ try {
 
     $order1 = new Order();
     $order1
-        ->setServiceCode('PS1')
+        ->setServiceCode('S1')
         ->setSender($sender1)
         ->setReceiver($receiver1)
         ->setParcels($parcels1)
@@ -119,7 +124,7 @@ try {
 
     $order2 = new Order();
     $order2
-        ->setServiceCode('PS5 LT')
+        ->setServiceCode('S24EC0')
         ->setSender($sender1)
         ->setReceiver($receiver1)
         ->setParcels($parcels1)
@@ -128,7 +133,7 @@ try {
         ->setCallbackUrls($callback_urls);
     $order3 = new Order();
     $order3
-        ->setServiceCode('PS5 LT')
+        ->setServiceCode('S24EC0')
         ->setSender($sender1)
         ->setReceiver($receiver1)
         ->setParcels($parcels1)
@@ -137,34 +142,37 @@ try {
         ->setCallbackUrls($callback_urls);
     $order3->addItems($item2)->addItems($items1)->addParcels($parcel1)->addParcels($parcels1);
 
-    //$allCountries                       = $ps->listAllCountries();
-    //$departments                        = $ps->getDepartments();
-    //$offers                              = $ps->getOffers($sender1, $receiver1, $parcels1);
-    //$allOrders                          = $ps->getAllOrders();
-    //$label                              = $ps->getLabel('S240824196134');
-    //$terminals                          = $ps->getTerminals('LT');
-    //$allServices                        = $ps->listAllServices();
-    //$manifest                           = $ps->generateManifest('S24C2011462');
-    //$manifestLatest                     = $ps->generateManifestLatest();
-    //$makePickupResult                   = $ps->makePickup('W2S0627258');
-    //$orderTrackingInfo                  = $ps->trackOrder('W2S030418190');
+//  $allCountries                       = $ps->listAllCountries();
+//  $allStates                        = $ps->listAllStates();
+//  $allServices                        = $ps->listAllServices();
+//  $offers                              = $ps->getOffers($sender1, $receiver1, $parcels1);
+//  $allOrders                          = $ps->getAllOrders();
+//  $generateOrderResult = $ps->generateOrder($order3);
+//  $generateOrder_parcelTerminalResult = $ps->generateOrder_parcelTerminal($order2);
+//  $cancelOrderResult = $ps->cancelOrder('S240423208227');
+//  $label                              = $ps->getLabel('S240423208227');
+//  $orderTrackingInfo                  = $ps->trackOrder('S240423208227');
+//  $manifest                           = $ps->generateManifest('S240423208227');
+//  $manifestLatest                     = $ps->generateManifest('S240423208227');
+  $terminals                          = $ps->getTerminals('LT');
 
 
-    $generateOrderResult = $ps->generateOrder($order3);
-    //$generateOrder_parcelTerminalResult = $ps->generateOrder_parcelTerminal($order2);
 
-    //echo json_encode($allCountries);
-    //echo json_encode($departments);
-    //echo json_encode($offers);
-    //echo json_encode($label);
-    //echo json_encode($terminals);
-    //echo json_encode($allServices);
-    //echo json_encode($manifest);
-    //echo json_encode($manifestLatest);
-    //echo json_encode($makePickupResult);
-    //echo json_encode($orderTrackingInfo);
-    //echo json_encode($generateOrderResult);
-    //echo json_encode($generateOrder_parcelTerminalResult);
+
+//    echo json_encode($allCountries);
+//    echo json_encode($allStates);
+//    echo json_encode($allServices);
+//    echo json_encode($offers);
+//    echo json_encode($allOrders);
+//    echo json_encode($generateOrderResult);
+//    echo json_encode($generateOrder_parcelTerminalResult);
+//    echo json_encode($cancelOrderResult);
+//    echo json_encode($label);
+//    echo json_encode($orderTrackingInfo);
+//    echo json_encode($manifest);
+//    echo json_encode($manifestLatest);
+//    echo json_encode($manifestLatest);
+  echo json_encode($terminals);
 } catch (Siusk24LTException $e) {
     echo $e->getMessage();
 }

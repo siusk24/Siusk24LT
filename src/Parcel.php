@@ -48,10 +48,9 @@ class Parcel
         return $this;
     }
 
-    public function setHeight($heigth)
+    public function setHeight($height)
     {
-        // typo in word height - yra kelios vietos sitame faile - reikia visas pakeisti.
-        $this->heigth = $heigth;
+        $this->height = $height;
 
         return $this;
     }
@@ -62,13 +61,13 @@ class Parcel
         if (!$this->unit_weight) throw new Siusk24LTException('All the fields must be filled. unit_weight is missing.');
         if (!$this->width) throw new Siusk24LTException('All the fields must be filled. width is missing.');
         if (!$this->length) throw new Siusk24LTException('All the fields must be filled. length is missing.');
-        if (!$this->heigth) throw new Siusk24LTException('All the fields must be filled. heigth is missing.');
+        if (!$this->height) throw new Siusk24LTException('All the fields must be filled. heigth is missing.');
         $parcel = array(
             'amount' => $this->amount,
             'weight' => $this->unit_weight,
             'x' => $this->width,
             'y' => $this->length,
-            'z' => $this->heigth
+            'z' => $this->height
         );
 
         return $parcel;

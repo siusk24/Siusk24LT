@@ -16,6 +16,7 @@ class Person
     protected $city;
     protected $phone_number;
     protected $country_id;
+    protected $eori;
 
     protected $shipping_type;
 
@@ -93,5 +94,12 @@ class Person
         $this->country_id = $country_id;
 
         return $this;
+    }
+
+    public function setEori($eori)
+    {
+      $this->eori = $eori;
+
+      return $this;
     }
 }

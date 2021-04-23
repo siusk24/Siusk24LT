@@ -25,10 +25,13 @@ class Sender extends Person
         if (!$this->phone_number) throw new Siusk24LTException('All the fields must be filled. phone_number is missing.');
         if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
         $sender = array(
+            'shipping_type' => $this->shipping_type,
             'company_name' => $this->company_name,
             'contact_name' => $this->contact_name,
             'street_name' => $this->street_name,
-            'zipcode' => $this->zipcode,
+            $this->shipping_type === 'courier' ?
+              'zipcode' :
+              'terminal_zipcode' => $this->zipcode,
             'city' => $this->city,
             'phone' => $this->phone_number,
             'country_id' => $this->country_id,

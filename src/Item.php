@@ -12,6 +12,7 @@ class Item
     private $description;
     private $value;
     private $units;
+    private $country_id;
 
     public function __construct()
     {
@@ -39,15 +40,24 @@ class Item
         return $this;
     }
 
+    public function setCountryId($country_id)
+    {
+      $this->country_id = $country_id;
+
+      return $this;
+    }
+
     public function generateItem()
     {
         if (!$this->description) throw new Siusk24LTException('All the fields must be filled. description is missing.');
         if (!$this->value) throw new Siusk24LTException('All the fields must be filled. value is missing.');
         if (!$this->units) throw new Siusk24LTException('All the fields must be filled. units is missing.');
+        if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
         return array(
             'description' => $this->description,
             'value' => $this->value,
-            'units' => $this->units
+            'units' => $this->units,
+            'country_id' => $this->country_id
         );
     }
 

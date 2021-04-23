@@ -7,7 +7,7 @@ use Siusk24LT\Exception\ValidationException;
 
 class API
 {
-    protected $url = "https://demo.siusk24.lt/api/v1/";
+    protected $url = "https://staging.siusk24.lt/api/v1/";
     protected $token;
     private $debug_mode;
 
@@ -35,6 +35,12 @@ class API
         return $this;
     }
 
+  public function setUrl($url)
+  {
+    $this->url = $url;
+
+    return $this;
+  }
 
     private function callAPI($url, $data = [])
     {
@@ -101,22 +107,10 @@ class API
             throw new Siusk24LTException(implode(" \n", json_decode($response)->errors));
         }
 
-        // paliktas uzkomentuotas kodas - tai prasto stiliaus pavyzdys, geriau istrinti
-        /*
-                if (isset($errors['messages'])) {
-                    echo 'messages:<br><br>';
-                    echo $response;
-                    echo '<br><br>';
-                    throw new ValidationException(debug_backtrace()[2]['function'] . ':<br><br>' . implode(", \n", $errors['messages']));
-                }
-        */
         if (isset($respObj['errors']) && $respObj['errors']) {
             echo 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>';
             $this->throwErrors($respObj['errors']);
         }
-        // per daug tuscios vietos
-
-
 
         $r = $response ? json_encode($response) : 'Connection timed out';
         throw new Siusk24LTException('API responded with error:<br><br>' . 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>' . $r);
@@ -139,113 +133,86 @@ class API
         throw new ValidationException(implode(",<br>", $errs));
     }
 
+  public function listAllCountries()
+  {
+    $response = $this->callAPI($this->url . 'countries');
 
-    public function listAllCountries()
-    {
-        $response = $this->callAPI($this->url . 'countries');
+    return $response->countries;
+  }
 
-        return $response->countries;
-    }
+  public function listAllStates()
+  {
+    $response = $this->callAPI($this->url . 'states');
 
-    public function getDepartments()
-    {
-        $response = $this->callAPI($this->url . 'departments');
+    return $response->states;
+  }
 
-        return $response->departments;
-    }
+  public function listAllServices()
+  {
+    $response = $this->callAPI($this->url . 'services');
 
-    public function listAllServices()
-    {
-        $response = $this->callAPI($this->url . 'services');
+    return $response->services;
+  }
 
-        return $response->services;
-    }
+  public function getOffers(Sender $sender, Receiver $receiver, $parcels)
+  {
+    $post_data = array(
+      'sender' => $sender->generateSenderOffers(),
+      'receiver' => $receiver->generateReceiverOffers(),
+      'parcels' => $parcels
+    );
+    $response = $this->callAPI($this->url . 'services/', $post_data);
 
-    public function getOffers(Sender $sender, Receiver $receiver, $parcels)
-    {
-        $post_data = array(
-            'sender' => $sender->generateSenderOffers(),
-            'receiver' => $receiver->generateReceiverOffers(),
-            'parcels' => $parcels
-        );
-        $response = $this->callAPI($this->url . 'services/', $post_data);
+    return $response->offers;
+  }
 
-        return $response->offers;
-    }
+  public function getAllOrders()
+  {
+    return $this->callAPI($this->url . 'orders');
+  }
 
-    public function getAllOrders()
-    {
-        $response = $this->callAPI($this->url . 'orders');
+  public function generateOrder($order)
+  {
+    $post_data = $order->__toArray();
+    return $this->callAPI($this->url . 'orders', $post_data);
 
-        return $response->orders;
-    }
+  }
 
-    public function getLabel($shipment_id)
-    {
-        $response = $this->callAPI($this->url . "orders/" . $shipment_id . "/label");
+  public function generateOrder_parcelTerminal($order)
+  {
+    $post_data = $order->__toArray();
 
-        return $response;
-    }
+    return $this->callAPI($this->url . 'orders', $post_data);
+  }
 
-    public function generateManifest($cart_id)
-    {
-        $response = $this->callAPI($this->url . 'manifests/' . $cart_id);
+  public function cancelOrder($shipment_id)
+  {
+    return $this->callAPI($this->url . 'orders/' . $shipment_id . '/cancel');
+  }
 
-        return $response;
-    }
+  public function getLabel($shipment_id)
+  {
+    return $this->callAPI($this->url . "orders/" . $shipment_id . "/label");
+  }
 
-    public function generateManifestLatest()
-    {
-        $response = $this->callAPI($this->url . 'manifests/latest');
+  public function trackOrder($shipment_id)
+  {
+    return $this->callAPI($this->url . 'orders/' . $shipment_id . '/track');
 
-        return $response;
-    }
+  }
 
-    public function getTerminals($country_code)
-    {
-        $response = $this->callAPI($this->url . 'terminals/' . $country_code);
+  public function generateManifest($cart_id)
+  {
+    return $this->callAPI($this->url . 'manifests/' . $cart_id);
+  }
 
-        return $response->terminals;
-    }
+  public function generateManifestLatest()
+  {
+    return $this->callAPI($this->url . 'manifests/latest');
+  }
 
-    public function generateOrder($order)
-    {
-        $post_data = $order->__toArray();
-        $response = $this->callAPI($this->url . 'orders', $post_data);
-
-        return $response;
-    }
-
-    public function generateOrder_parcelTerminal($order)
-    {
-        $post_data = $order->__toArray();
-        // nebutinas lokalus kintamasis
-        $response = $this->callAPI($this->url . 'orders', $post_data);
-
-        return $response;
-    }
-
-    public function cancelOrder($shipment_id)
-    {
-        // nebutinas lokalus kintamasis
-        $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/cancel');
-
-        return $response;
-    }
-
-    public function makePickup($shipment_id)
-    {
-        // nebutinas lokalus kintamasis
-        $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/pickup');
-
-        return $response;
-    }
-
-    public function trackOrder($shipment_id)
-    {
-        // nebutinas lokalus kintamasis
-        $response = $this->callAPI($this->url . 'orders/' . $shipment_id . '/track');
-
-        return $response;
-    }
+  public function getTerminals($country_code)
+  {
+    return $this->callAPI($this->url . 'terminals/' . $country_code);
+  }
 }
