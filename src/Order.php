@@ -1,12 +1,12 @@
 <?php
 
-namespace Siusk24LT;
+namespace Mijora\S24IntApiLib;
 
-use Siusk24LT\Exception\Siusk24LTException;
-use Siusk24LT\Sender;
-use Siusk24LT\Receiver;
-use Siusk24LT\Item;
-use Siusk24LT\Parcel;
+use Mijora\S24IntApiLib\Exception\S24ApiException;
+use Mijora\S24IntApiLib\Sender;
+use Mijora\S24IntApiLib\Receiver;
+use Mijora\S24IntApiLib\Item;
+use Mijora\S24IntApiLib\Parcel;
 
 class Order
 {
@@ -17,11 +17,12 @@ class Order
     private $items = array();
     private $reference;
     private $callback_urls;
+    private $additional_services = array();
+    private $cod_amount = 0;
 
 
     public function __construct()
     {
-
     }
 
     public function addParcels($parcels)
@@ -50,6 +51,14 @@ class Order
     public function setServiceCode($service_code)
     {
         $this->service_code = $service_code;
+
+        return $this;
+    }
+
+    public function setAdditionalServices($services, $cod_amount = 0)
+    {
+        $this->additional_services = $services;
+        $this->cod_amount = $cod_amount;
 
         return $this;
     }
@@ -98,14 +107,15 @@ class Order
 
     public function generateOrder()
     {
-        if (!$this->service_code) throw new Siusk24LTException('All the fields must be filled. service_code is missing.');
-        if (!$this->sender) throw new Siusk24LTException('All the fields must be filled. sender is missing.');
-        if (!$this->receiver) throw new Siusk24LTException('All the fields must be filled. receiver is missing.');
-        if (!$this->parcels) throw new Siusk24LTException('All the fields must be filled. parcels are missing.');
-        if (!$this->items) throw new Siusk24LTException('All the fields must be filled. items are missing.');
-        if (!$this->reference) throw new Siusk24LTException('All the fields must be filled. reference is missing.');
+        if (!$this->service_code) throw new S24ApiException('All the fields must be filled. service_code is missing.');
+        if (!$this->sender) throw new S24ApiException('All the fields must be filled. sender is missing.');
+        if (!$this->receiver) throw new S24ApiException('All the fields must be filled. receiver is missing.');
+        if (!$this->parcels) throw new S24ApiException('All the fields must be filled. parcels are missing.');
+        if (!$this->items) throw new S24ApiException('All the fields must be filled. items are missing.');
+        if (!$this->reference) throw new S24ApiException('All the fields must be filled. reference is missing.');
+        if (in_array('cod', $this->additional_services) && !$this->cod_amount) throw new S24ApiException('Selected COD, but cod amount is 0');
 
-        return array(
+        $order_data = array(
             'service_code' => $this->service_code,
             'sender' => $this->sender->generateSender(),
             'receiver' => $this->receiver->generateReceiver(),
@@ -114,6 +124,12 @@ class Order
             'export_items' => $this->items,
             'callback_urls' => $this->callback_urls
         );
+
+        foreach ($this->additional_services as $service) {
+            $order_data[$service] = $service === 'cod' ? $this->cod_amount : 'true';
+        }
+
+        return $order_data;
     }
 
     public function returnJson()

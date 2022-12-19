@@ -1,8 +1,8 @@
 <?php
 
-namespace Siusk24LT;
+namespace Mijora\S24IntApiLib;
 
-use Siusk24LT\Exception\Siusk24LTException;
+use Mijora\S24IntApiLib\Exception\S24ApiException;
 
 /**
  *
@@ -17,6 +17,8 @@ class Person
     protected $phone_number;
     protected $country_id;
     protected $eori;
+    protected $hs_code;
+    protected $state_code;
 
     protected $shipping_type;
 
@@ -39,7 +41,7 @@ class Person
     public function setShippingType($shipping_type)
     {
         if (!in_array($shipping_type, $this->valid_shipping_types)) {
-            throw new Siusk24LTException('Unknown shipping type:<br>' . $shipping_type . '. You need to use one of the following types:<br><br>' . implode("<br>", $this->valid_shipping_types));
+            throw new S24ApiException('Unknown shipping type:<br>' . $shipping_type . '. You need to use one of the following types:<br><br>' . implode("<br>", $this->valid_shipping_types));
         }
         $this->shipping_type = $shipping_type;
 
@@ -98,8 +100,22 @@ class Person
 
     public function setEori($eori)
     {
-      $this->eori = $eori;
+        $this->eori = $eori;
 
-      return $this;
+        return $this;
+    }
+
+    public function setHsCode($hs_code)
+    {
+        $this->hs_code = $hs_code;
+
+        return $this;
+    }
+
+    public function setStateCode($state_code)
+    {
+        $this->state_code = $state_code;
+
+        return $this;
     }
 }

@@ -1,20 +1,21 @@
 <?php
 
-namespace Siusk24LT;
+namespace Mijora\S24IntApiLib;
 
-use Siusk24LT\Exception\Siusk24LTException;
-use Siusk24LT\Exception\ValidationException;
+use Mijora\S24IntApiLib\Exception\S24ApiException;
+use Mijora\S24IntApiLib\Exception\ValidationException;
 
 class API
 {
-    protected $url = "https://staging.siusk24.lt/api/v1/";
+    protected $url = "https://demo.siusk24.lt/api/v1/";
     protected $token;
     private $debug_mode;
+    private $timeout = 5;
 
     public function __construct($token = false, $test_mode = false, $api_debug_mode = false)
     {
         if (!$token) {
-            throw new Siusk24LTException("User Token is required");
+            throw new S24ApiException("User Token is required");
         }
 
         $this->token = $token;
@@ -35,12 +36,19 @@ class API
         return $this;
     }
 
-  public function setUrl($url)
-  {
-    $this->url = $url;
+    public function setUrl($url)
+    {
+        $this->url = $url;
 
-    return $this;
-  }
+        return $this;
+    }
+
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+
+        return $this;
+    }
 
     private function callAPI($url, $data = [])
     {
@@ -51,14 +59,12 @@ class API
             "Authorization: Bearer " . $this->token
         ));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
 
         if ($data) {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         }
-
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
         $response = curl_exec($ch);
 
@@ -94,26 +100,30 @@ class API
     {
         $respObj = json_decode($response, true);
         if ($httpCode == 200) {
-          if (isset($respObj['messages']) && $respObj['messages']) {
-              // istrinti sita eilute, kad vartotojui neisvestu
-              echo 'messages from ' . debug_backtrace()[2]['function'] . '():<br><br>';
-              $this->throwErrors($respObj['messages']);
-          }
+            if (isset($respObj['messages']) && $respObj['messages']) {
+                // istrinti sita eilute, kad vartotojui neisvestu
+                if ($this->debug_mode) {
+                    echo 'messages from ' . debug_backtrace()[2]['function'] . '():<br><br>';
+                }
+                $this->throwErrors($respObj['messages']);
+            }
             return json_decode($response)->result;
         }
 
         if ($httpCode == 401) {
             // galetu buti tikslesnis exception - Siusk24NotAuthorizedException
-            throw new Siusk24LTException(implode(" \n", json_decode($response)->errors));
+            throw new S24ApiException(implode(" \n", json_decode($response)->errors));
         }
 
         if (isset($respObj['errors']) && $respObj['errors']) {
-            echo 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>';
+            if ($this->debug_mode) {
+                echo 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>';
+            }
             $this->throwErrors($respObj['errors']);
         }
 
         $r = $response ? json_encode($response) : 'Connection timed out';
-        throw new Siusk24LTException('API responded with error:<br><br>' . 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>' . $r);
+        throw new S24ApiException('API responded with error:<br><br>' . 'errors in ' . debug_backtrace()[2]['function'] . '():<br><br>' . $r);
     }
 
 
@@ -133,86 +143,87 @@ class API
         throw new ValidationException(implode(",<br>", $errs));
     }
 
-  public function listAllCountries()
-  {
-    $response = $this->callAPI($this->url . 'countries');
+    public function listAllCountries()
+    {
+        $response = $this->callAPI($this->url . 'countries');
 
-    return $response->countries;
-  }
+        return $response->countries;
+    }
 
-  public function listAllStates()
-  {
-    $response = $this->callAPI($this->url . 'states');
+    public function listAllStates()
+    {
+        $response = $this->callAPI($this->url . 'states');
 
-    return $response->states;
-  }
+        return $response->states;
+    }
 
-  public function listAllServices()
-  {
-    $response = $this->callAPI($this->url . 'services');
+    public function listAllServices()
+    {
+        $response = $this->callAPI($this->url . 'services');
 
-    return $response->services;
-  }
+        return $response->services;
+    }
 
-  public function getOffers(Sender $sender, Receiver $receiver, $parcels)
-  {
-    $post_data = array(
-      'sender' => $sender->generateSenderOffers(),
-      'receiver' => $receiver->generateReceiverOffers(),
-      'parcels' => $parcels
-    );
-    $response = $this->callAPI($this->url . 'services/', $post_data);
+    public function getOffers(Sender $sender, Receiver $receiver, $parcels)
+    {
+        $post_data = array(
+            'sender' => $sender->generateSenderOffers(),
+            'receiver' => $receiver->generateReceiverOffers(),
+            'parcels' => $parcels
+        );
+        $response = $this->callAPI($this->url . 'services/', $post_data);
 
-    return $response->offers;
-  }
+        return $response->offers;
+    }
 
-  public function getAllOrders()
-  {
-    return $this->callAPI($this->url . 'orders');
-  }
+    public function getAllOrders()
+    {
+        return $this->callAPI($this->url . 'orders');
+    }
 
-  public function generateOrder($order)
-  {
-    $post_data = $order->__toArray();
-    return $this->callAPI($this->url . 'orders', $post_data);
+    public function generateOrder($order)
+    {
+        $post_data = $order->__toArray();
+        return $this->callAPI($this->url . 'orders', $post_data);
+    }
 
-  }
+    public function generateOrder_parcelTerminal($order)
+    {
+        $post_data = $order->__toArray();
 
-  public function generateOrder_parcelTerminal($order)
-  {
-    $post_data = $order->__toArray();
+        return $this->callAPI($this->url . 'orders', $post_data);
+    }
 
-    return $this->callAPI($this->url . 'orders', $post_data);
-  }
+    public function cancelOrder($shipment_id)
+    {
+        return $this->callAPI($this->url . 'orders/' . $shipment_id . '/cancel');
+    }
 
-  public function cancelOrder($shipment_id)
-  {
-    return $this->callAPI($this->url . 'orders/' . $shipment_id . '/cancel');
-  }
+    public function getLabel($shipment_id)
+    {
+        return $this->callAPI($this->url . "orders/" . $shipment_id . "/label");
+    }
 
-  public function getLabel($shipment_id)
-  {
-    return $this->callAPI($this->url . "orders/" . $shipment_id . "/label");
-  }
+    public function trackOrder($shipment_id)
+    {
+        return $this->callAPI($this->url . 'orders/' . $shipment_id . '/track');
+    }
 
-  public function trackOrder($shipment_id)
-  {
-    return $this->callAPI($this->url . 'orders/' . $shipment_id . '/track');
+    public function generateManifest($cart_id)
+    {
+        return $this->callAPI($this->url . 'manifests/' . $cart_id);
+    }
 
-  }
+    public function generateManifestLatest()
+    {
+        return $this->callAPI($this->url . 'manifests/latest');
+    }
 
-  public function generateManifest($cart_id)
-  {
-    return $this->callAPI($this->url . 'manifests/' . $cart_id);
-  }
-
-  public function generateManifestLatest()
-  {
-    return $this->callAPI($this->url . 'manifests/latest');
-  }
-
-  public function getTerminals($country_code)
-  {
-    return $this->callAPI($this->url . 'terminals/' . $country_code);
-  }
+    public function getTerminals($country_code = 'ALL')
+    {
+        if ($country_code == 'ALL') {
+            return $this->callAPI($this->url . 'terminals');
+        }
+        return $this->callAPI($this->url . 'terminals/' . $country_code);
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Siusk24LT;
+namespace Mijora\S24IntApiLib;
 
-use Siusk24LT\Exception\Siusk24LTException;
-use Siusk24LT\Person;
+use Mijora\S24IntApiLib\Exception\S24ApiException;
+use Mijora\S24IntApiLib\Person;
 
 /**
  *
@@ -17,34 +17,33 @@ class Sender extends Person
 
     public function generateSender()
     {
-        if (!$this->company_name) throw new Siusk24LTException('All the fields must be filled. company_name is missing.');
-        if (!$this->contact_name) throw new Siusk24LTException('All the fields must be filled. contact_name is missing.');
-        if (!$this->street_name) throw new Siusk24LTException('All the fields must be filled. street_name is missing.');
-        if (!$this->zipcode) throw new Siusk24LTException('All the fields must be filled. zipcode is missing.');
-        if (!$this->city) throw new Siusk24LTException('All the fields must be filled. city is missing.');
-        if (!$this->phone_number) throw new Siusk24LTException('All the fields must be filled. phone_number is missing.');
-        if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
+        if (!$this->company_name) throw new S24ApiException('All the fields must be filled. company_name is missing.');
+        if (!$this->contact_name) throw new S24ApiException('All the fields must be filled. contact_name is missing.');
+        if (!$this->street_name) throw new S24ApiException('All the fields must be filled. street_name is missing.');
+        if (!$this->zipcode) throw new S24ApiException('All the fields must be filled. zipcode is missing.');
+        if (!$this->city) throw new S24ApiException('All the fields must be filled. city is missing.');
+        if (!$this->phone_number) throw new S24ApiException('All the fields must be filled. phone_number is missing.');
+        if (!$this->country_id) throw new S24ApiException('All the fields must be filled. country_id is missing.');
         $sender = array(
             'shipping_type' => $this->shipping_type,
             'company_name' => $this->company_name,
             'contact_name' => $this->contact_name,
-            'street_name' => $this->street_name,
-            $this->shipping_type === 'courier' ?
-              'zipcode' :
-              'terminal_zipcode' => $this->zipcode,
+            'street' => $this->street_name,
             'city' => $this->city,
             'phone' => $this->phone_number,
             'country_id' => $this->country_id,
         );
-        if ($this->shipping_type)
-            $sender += ['shipping_type' => $this->shipping_type];
+        
+        $zipcode_key = $this->shipping_type === self::SHIPPING_COURIER ? 'zipcode' : 'terminal_zipcode';
+        $sender[$zipcode_key] = $this->zipcode;
+
         return $sender;
     }
 
     public function generateSenderOffers()
     {
-        if (!$this->zipcode) throw new Siusk24LTException('All the fields must be filled. zipcode is missing.');
-        if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
+        if (!$this->zipcode) throw new S24ApiException('All the fields must be filled. zipcode is missing.');
+        if (!$this->country_id) throw new S24ApiException('All the fields must be filled. country_id is missing.');
         return array(
             'zipcode' => $this->zipcode,
             'country_id' => $this->country_id
@@ -53,7 +52,7 @@ class Sender extends Person
 
     public function returnJson()
     {
-        return $this->json_encode(generateSender());
+        return json_encode($this->generateSender());
     }
 
     public function __toArray()

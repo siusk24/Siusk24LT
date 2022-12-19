@@ -1,10 +1,10 @@
 <?php
 
-namespace Siusk24LT\Exception;
+namespace Mijora\S24IntApiLib\Exception;
 
-use Siusk24LT\Exception\Siusk24LTException;
+use Mijora\S24IntApiLib\Exception\S24ApiException;
 
-class ValidationException extends Siusk24LTException
+class ValidationException extends S24ApiException
 {
-  // Custom exception for validations
+    // Custom exception for validations
 }
