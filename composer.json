@@ -10,7 +10,7 @@
     },
     "autoload": {
       "psr-4": {
-        "Siusk24LT\\": "src/"
+        "Mijora\\S24IntApiLib\\": "src/"
       }
     }
 }

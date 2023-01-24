@@ -1,8 +1,8 @@
 <?php
 
-namespace Siusk24LT;
+namespace Mijora\S24IntApiLib;
 
-use Siusk24LT\Exception\Siusk24LTException;
+use Mijora\S24IntApiLib\Exception\S24ApiException;
 
 /**
  *
@@ -13,10 +13,10 @@ class Item
     private $value;
     private $units;
     private $country_id;
+    private $hs_code;
 
     public function __construct()
     {
-
     }
 
     public function setDescription($description)
@@ -42,22 +42,30 @@ class Item
 
     public function setCountryId($country_id)
     {
-      $this->country_id = $country_id;
+        $this->country_id = $country_id;
 
-      return $this;
+        return $this;
+    }
+
+    public function setHsCode($hs_code)
+    {
+        $this->hs_code = $hs_code;
+
+        return $this;
     }
 
     public function generateItem()
     {
-        if (!$this->description) throw new Siusk24LTException('All the fields must be filled. description is missing.');
-        if (!$this->value) throw new Siusk24LTException('All the fields must be filled. value is missing.');
-        if (!$this->units) throw new Siusk24LTException('All the fields must be filled. units is missing.');
-        if (!$this->country_id) throw new Siusk24LTException('All the fields must be filled. country_id is missing.');
+        if (!$this->description) throw new S24ApiException('All the fields must be filled. description is missing.');
+        if (!$this->value) throw new S24ApiException('All the fields must be filled. value is missing.');
+        if (!$this->units) throw new S24ApiException('All the fields must be filled. units is missing.');
+        if (!$this->country_id) throw new S24ApiException('All the fields must be filled. country_id is missing.');
         return array(
             'description' => $this->description,
             'value' => $this->value,
             'units' => $this->units,
-            'country_id' => $this->country_id
+            'country_id' => $this->country_id,
+            'hs_code' => $this->hs_code ? $this->hs_code : ''
         );
     }
 
