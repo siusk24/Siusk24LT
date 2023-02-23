@@ -41,7 +41,7 @@ class Receiver extends Person
         );
 
         $zipcode_key = $this->shipping_type === self::SHIPPING_COURIER ? 'zipcode' : 'terminal_zipcode';
-        $sender[$zipcode_key] = $this->zipcode;
+        $receiver[$zipcode_key] = $this->zipcode;
 
         return $receiver;
     }
